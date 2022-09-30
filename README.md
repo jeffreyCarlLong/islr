@@ -1,7 +1,7 @@
-# islr
+# ISLR
 [islr GitHub](https://github.com/jeffreyCarlLong/islr.git)
 
-# Introduction to Statistical Learning 
+# Introduction to Statistical Learning (ISLR)
 ## with Applications in R
 
 A Quarto Experiment with a publication by Tibshirani 

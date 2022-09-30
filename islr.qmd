@@ -1,0 +1,71 @@
+---
+title: "Introduction to Statistcal Learing"
+subtitle: "with Applications in R (ISLR) abstracted to Biomarker Discovery and Prediction"
+author: "Jeffrey Long"
+format: html
+editor: visual
+---
+
+## A Quarto Experiment
+
+Quarto enables you to weave together content and executable code into a finished document.
+
+ISLR second edition is available for the author in [a free pdf format](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf).
+
+This is my biomarker experiment with Quarto and ISLR.
+
+## History
+
+The Elements of Statistical Learning (ESL, by Hastie, Tibshirani, and Friedman) --- was published in 2001. The authors of ISLR2 (the resource of this experiment) are Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani.
+
+## Contents
+
+1.  Introduction
+2.  Statistical Learning
+3.  Linear Regression
+4.  Classification
+5.  Resampling Methods
+6.  Linear Model Selection and Regularization
+7.  Moving Beyond Linearity
+8.  Tree-Based Methods
+9.  Support Vector Machines
+10. Deep Learning
+11. Survival Analysis and Censored Data
+12. Unsupervised Learning
+13. Multiple Testing
+
+## Introduction
+
+Statistical learning refers to a vast set of tools for understanding data. These tools can be classified as supervised or unsupervised. Broadly speaking, supervised statistical learning involves building a statistical model for pre- dicting, or estimating, an output based on one or more inputs. Problems of this nature occur in fields as diverse as business, medicine, astrophysics, and public policy. With unsupervised statistical learning, there are inputs but no supervising output; nevertheless we can learn relationships and struc- ture from such data.
+
+**The `Wage` data** involves predicting a continuous or quantitative output value.
+This is often referred to as a regression problem. However, in certain cases
+we may instead wish to predict a non-numerical value---that is, a categorical
+or qualitative output.
+
+An example of predicting non-numerical values, such as up/down is explored with **the `Smarket` data** are the Standard & Poor's 500 (S&P) stock index over a 5-year period between 2001 and 2005.
+
+Imagine the first steps of a search for biomarkers in gene expression data. We might have demographic information for a number of patients with an indication. We may wish to understand which types of patients are similar to each other by grouping individuals according to observed characteristics. This is a *clustering* problem. Unlike `Wage` and `Smarket` data, here we are not trying to predict an output variable. We will use **the NCI60 data set** to determine groups or clusters based on 6,830 gene expression measurements for 64 cell lines.
+
+In this particular data set, it turns out that the cell lines correspond to 14 different types of cancer. There is clear evidence that cell lines with the same cancer type tend to be located near each other in clustering methods.
+
+We will use *n* to represent the number of distinct data points, or observations, in our sample. We will let *p* denote the number of variables that are available for use in making predictions. For example, the `Wage` data set consists of 11 variables for 3,000 people, so we have *n* = 3,000 observations and *p* = 11 variables (such as year, age, race, and more). We indicate variable names using the font: `Variable Name`.
+
+We will let $x_{ij}$ represent the value of the *j*th variable for the *i*th observation, where *i* = 1,2,...,*n* and *j* = 1,2,...,*p*. Throughout this experiment, *i* will be used to index the samples or observations (from 1 to *n*) and j will be used to index the variables (from 1 to *p*). We let $\chi$ denote an $n × p$ matrix whose (*i*, *j*)th element is $x_{ij}$ .
+
+The product of **A** and **B** is denoted **AB**. The (*i*,*j*)th element of **AB** is computed by multiplying each element of the *i*th row of **A** by the corresponding element of the *j*th column of **B**. That is, $(AB)_{ij} = \Sigma^d_{k=1} a_{ik}b_{kj}$. As an example,
+
+consider $A = \begin{pmatrix}1 & 2\\3 & 4\end{pmatrix}$ and $B  = \begin{pmatrix}5 & 6\\7 & 8\end{pmatrix}$ .
+
+$AB = \begin{pmatrix}1 & 2\\3 & 4\end{pmatrix}\begin{pmatrix}5 & 6\\7 & 8\end{pmatrix} = \begin{pmatrix}1*5+2*7 & 1*6+2*8\\3*5+4*7 & 3*6+4*8\end{pmatrix} = \begin{pmatrix}19 & 22\\43 & 50\end{pmatrix}$
+
+Note that this operation produces an $r × s$ matrix. It is only possible to compute **AB** if the number of columns of **A** is the same as the number of rows of **B**.
+
+```{r}
+# install.packages("ISLR2")
+library(ISLR2)
+packageDescription("ISLR2")
+
+```
+
+The website for ISLR2 is [www.statlearning.com](https://www.statlearning.com/).
