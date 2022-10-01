@@ -120,3 +120,57 @@ Some methods such as linear regression are less flexible, or more restrictive, i
 However, if we are mainly interested in inference, then restrictive models are much more interpretable. For instance, when inference is the goal, the linear model may be a good choice since it will be quite easy to understand the relationship between $Y$ and $X_1,X_2,…,X_p$ .
 
 Least squares linear regression, is relatively inflexible but is quite interpretable. The lasso, relies upon the linear model but uses an alternative fitting procedure for estimating the coefficients $\beta_0, \beta_1, . . . , \beta_p$ . The *lasso* is more restrictive in es- timating the coefficients, and sets a number of them to exactly zero. Hence in this sense the lasso is a less flexible approach than linear regression. It is also more interpretable than linear regression, because in the final model the response variable will only be related to a small subset of the predictors---namely, those with nonzero coefficient estimates. Generalized additive models (GAMs) instead extend the linear model to allow for certain non-linear relationships. Consequently, GAMs are more flexible than linear regression. They are also somewhat less interpretable than linear regression, because the relationship between each predictor and the response is now modeled using a curve. Finally, fully non-linear methods such as bagging, boosting, support vector machines with non-linear kernels, and neural networks (deep learning), are highly flexible approaches that are harder to interpret.
+
+When prediction is the goal, one may suspect the most flexible method is the best choice as it would give the most accurate prediction. However, overfitting often leads us to less flexible methods with improved performance.
+
+### Supervised Versus Unsupervised Learning
+
+In supervised learning problems, for each observation of the predictor measurement(s) $x_i, i = 1, . . . , n$ there is an associated response measurement $y_i$ . We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). Many classical statistical learning methods such as linear regression and logistic regression,as well as more modern approaches such as GAM, boosting, and support vector machines, operate in the supervised learning domain.
+
+Unsupervised learning describes the somewhat more challenging situation in which for every observation $i = 1,…,n$ , we observe a vector of measurements $x_i$ but no associated response $y_i$ . It is not possible to fit a linear regression model, since there is no response variable to predict. In this setting, we are in some sense working blind; the situation is referred to as unsupervised because we lack a response variable that can supervise our analysis.
+
+One statistical learning tool that we may use in this setting is cluster analysis, or clustering. The goal of cluster analysis is to ascertain, on the basis of $x_1,…,x_n$ , whether the observations fall into relatively distinct groups. Identifying such groups can be of interest because it might be that the groups differ with respect to some property of interest.
+
+### Regression Versus Classification Problems
+
+Variables can be characterized as either quantitative or qualitative (also known as categorical). Quantitative variables take on numerical values. In contrast, qualitative variables take on values in one of K different classes, or categories. We tend to refer to problems with a quantitative response as regression problems, while those involving a qualitative response are often referred to as classification problems. Least squares linear regression is used with a quantitative response, whereas logistic regression is typically used with a qualitative (two-class, or binary) response. K-nearest neighbors and boosting can be used in the case of either quantitative or qualitative responses.
+
+We tend to select statistical learning methods on the basis of whether the response is quantitative or qualitative. However, whether the predictors are qualitative or quantitative is generally considered less important.
+
+## Assessing Model Accuracy
+
+No one method dominates all others over all possible data sets. Hence it is an important task to decide for any given set of data which method produces the best results. Selecting the best approach can be one of the most challenging parts of performing statistical learning in practice.
+
+### Measuring Quality of Fit
+
+In order to evaluate the performance of a statistical learning method on a given data set, we need some way to measure how well its predictions actually match the observed data. That is, we need to quantify the extent to which the predicted response value for a given observation is close to the true response value for that observation. In the regression setting, the most commonly-used measure is the mean squared error (MSE), given by
+
+$MSE = \frac{1}{n}\Sigma^n_{i=1}(y_i-\hat{f}(x_i))^2$ ,
+
+where $\hat{f}(x_i)$ is the prediction that $\hat{f}$ gives for the $i$th observation.
+
+The MSE will be small if the predicted responses are very close to the true responses, and will be large if for some of the observations, the predicted and true responses differ substantially.
+
+The MSE in is computed using the training data that was used tofit the model, and so should more accurately be referred to as the training MSE. But in general, we do not really care how well the method works training on the training data. Rather, we are interested in the accuracy of the predictions that we obtain when we apply our method to previously unseen test data. Suppose that we have clinical measurements (e.g. weight, blood pressure, height, age, family history of disease) for a number of patients, as well as information about whether each patient has diabetes. We can use these patients to train a statistical learning method to predict risk of diabetes based on clinical measurements. In practice, we want this method to accurately predict diabetes risk for future patients based on their clinical measurements. We are not very interested in whether or not the method accurately predicts diabetes risk for patients used to train the model, since we already know which of those patients have diabetes.
+
+We want to choose the method that gives the lowest test MSE, as opposed to the lowest training MSE. If we had a large number of test observations, we could compute
+
+$Ave(y_0 - \hat{f}(x_0))^2$ ,
+
+the average squared prediction error for these test observations $(x_0,y_0)$ . We'd like to select the model for which this quantity is as small as possible.
+
+The degrees of freedom is a quantity that summarizes the flexibility of a curve. When a given method yields a small training MSE but a large test MSE, we are said to be overfitting the data. Regardless of whether or not overfitting has occurred, we almost always expect the training MSE to be smaller than the test MSE because most statistical learning methods either directly or indirectly seek to minimize the training MSE. Overfitting refers specifically to the case in which a less flexible model would have yielded a smaller test MSE.
+
+Plotting of MSE versus degrees of freedom as model flexibility can guide model selection. Cross-validation can estimate the minimum test MSE using the training data.
+
+### The Bias-Variance Trade-Off
+
+It is possible to show that the **expected test MSE**, for a given value $x_0$ , can always be decomposed into the sum of three fundamental quantities: the variance of \$f(x_0)\$, the squared bias of $f(x_0)$ and the variance of the error terms $\epsilon$ .
+
+$E(y_0-\hat{f}(x_0))2 = Var(\hat{f}(x_0)) + [Bias(\hat{f}(x_0))^2 + Var(\epsilon)$ .
+
+we need to select a statistical learning method that simultaneously achieves low variance and low bias. Note that variance is inherently a nonnegative quantity, and squared bias is also nonnegative. Hence, we see that the expected test MSE can never lie below $Var(\epsilon)$ , the irreducible error.
+
+Variance refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. In general, more flexible statistical methods have higher variance. Bias refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.
+
+As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases. As we increase the flexibility of a class of methods, the bias tends to initially decrease faster than the variance increases. Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance. When this happens the test MSE increases.
