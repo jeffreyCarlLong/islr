@@ -174,3 +174,55 @@ we need to select a statistical learning method that simultaneously achieves low
 Variance refers to the amount by which $\hat{f}$ would change if we estimated it using a different training data set. In general, more flexible statistical methods have higher variance. Bias refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias.
 
 As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases. As we increase the flexibility of a class of methods, the bias tends to initially decrease faster than the variance increases. Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance. When this happens the test MSE increases.
+
+![Squared bias (blue curve), variance (orange curve), Var(ε) (dashed line), and test MSE (red curve) for the three data sets. The vertical dotted line indicates the flexibility level corresponding to the smallest test MSE.](var_bias_error.png)
+
+In a real-life situation in which $f$ is unobserved, it is generally not possible to explicitly compute the test MSE, bias, or variance for a statistical learning method. Nevertheless, one should always keep the **bias-variance trade-off** in mind.
+
+### The Classification Setting
+
+When response variable $y$ is qualitative, the most common approach for quantifying the accuracy of our estimate $\hat{f}$ is the training error rate, the proportion of mistakes that are made if we apply our estimate $\hat{f}$ to the training observations:
+
+$\frac{1}{n}\Sigma^n_{i=1}I(y_i!=\hat{y}_i)$ .
+
+Here $\hat{y}_i$ is the predicted class label for the $i$ th observation using $f$ . And $I(y_i != \hat{y}_i)$ is an *indicator variable* that equals 1 if $y_i ̸!= \hat{y}_i$ and zero if $y_i = \hat{y}_i$ . If $I(y_i ̸!= \hat{y}_i) = 0$ then the $i$ th observation was classified correctly by our classification method; otherwise it was misclassified. Hence the training error computes the fraction of incorrect classifications.
+
+The test error rate associated with a set of test observations of the form $(x_0, y_0)$ is given by
+
+$Ave(I(y_0 ̸!=ˆ\hat{y}_0))$ ,
+
+where $\hat{y}_0$ is the predicted class label that results from applying the classifier to the test observation with predictor $x_0$. A good classifier is one for which the test error is smallest.
+
+### The Bayes Classifier
+
+The test error rate is minimized, on average, by a very simple classifier that assigns each observation to the most likely class, given its predictor values. In other words, we should simply assign a test observation with predictor vector $x_0$ to the class $j$ for which
+
+$Pr(Y = j|X = x_0)$
+
+is largest. This conditional probability is the probability that $Y = j$ , given the observed predictor vector $x_0$ . This very simple classifier is called the *Bayes classifier*. In a two-class problem where there are only two possible response values, say class 1 or class 2, the Bayes classifier corresponds to predicting class one if $Pr(Y = 1|X = x_0) > 0.5$ , and class two otherwise.
+
+![A simulated data set consisting of 100 observations in each of two groups, indicated in blue and in orange. The purple dashed line represents the Bayes decision boundary. The orange background grid indicates the region in which a test observation will be assigned to the orange class, and the blue background grid indicates the region in which a test observation will be assigned to the blue class.](bayes_classifier.png)
+
+The Bayes classifier produces the lowest possible test error rate, called the Bayes error rate. Since the Bayes classifier will always choose the class for which is largest, the error rate will be $1−max_j Pr(Y = j|X = x_0) at X = x_0$ . In general, the overall Bayes error rate is given by
+
+$1−E(max_jPr(Y =j|X))$ ,
+
+where the expectation averages the probability over all possible values of $X$ . If the Bayes error rate is greater than zero, the classes overlap in the true population so $max_j Pr(Y = j|X = x_0) < 1$ for some values of $x_0$ . The Bayes error rate is analogous to the irreducible error.
+
+### K-Nearest Neighbors
+
+In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X$ , and so computing the Bayes classifier is impossible. Therefore, the Bayes classifier serves as an unattainable gold standard against which to compare other methods. Many approaches attempt to estimate the conditional distribution of $Y$ given $X$ , and then classify a given observation to the class with highest estimated probability. One such method is the K-nearest neighbors (KNN) classifier. Given a positive integer $K$ and a test observation $x_0$ , the KNN classifier first identifies the $K$ points in the training data that are closest to $x_0$ , represented by $N_0$ . It then estimates the conditional probability for class $j$ as the fraction of points in $N_0$ whose response values equal $j$ :
+
+$Pr(Y =j|X =x_0)= \frac{1}{K} \Sigma_{i\element N_0} I(y_i =j)$ .
+
+Finally, KNN classifies the test observation $x_0$ to the class with the largest probability.
+
+![Example of k-NN classification. The test sample (green dot) should be classified either to blue squares or to red triangles. If k = 3 (solid line circle) it is assigned to the red triangles because there are 2 triangles and only 1 square inside the inner circle. If k = 5 (dashed line circle) it is assigned to the blue squares (3 squares vs. 2 triangles inside the outer circle). -from Wikipedia.](KnnClassification.svg)
+
+![The black curve indicates the KNN decision boundary on data using K = 10. The Bayes decision boundary is shown as a purple dashed line. The KNN and Bayes decision boundaries are very similar.](knn_k10.png)
+
+![A comparison of the KNN decision boundaries (solid black curves) obtained using K = 1 and K = 100 on data. With K = 1, the decision boundary is overly flexible, while with K = 100 it is not sufficiently flexible. The Bayes decision boundary is shown as a purple dashed line.](knn_k1_k100.png)
+
+![The KNN training error rate (blue, 200 observations) and test error rate (orange, 5,000 observations) on the data, as the level of flexibility (assessed using 1/K on the log scale) increases, or equivalently as the number of neighbors K decreases. The black dashed line indicates the Bayes error rate. The jumpiness of the curves is due to the small size of the training data set.](knn_training_error_rate.png)
+
+The test error exhibits a characteristic U-shape, declining at first (with a minimum at approximately K = 10) before increasing again when the method becomes excessively flexible and overfits.
