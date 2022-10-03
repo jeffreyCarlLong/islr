@@ -303,5 +303,84 @@ write.table(Auto, "Auto.data")
 Auto <- read.table("Auto.data")
 Auto <- read.table("Auto.data", header = T, na.strings = "?", stringsAsFactors = T)
 # Auto <- read.csv("Auto.csv", na.strings = "?", stringsAsFactors = T)
+Auto <- na.omit(Auto)
+names(Auto)
+# Additional Graphical and Numerical Summaries
+plot(Auto$cylinders, Auto$mpg)
+attach(Auto)
+plot(cylinders, mpg)
+cylinders <- as.factor(cylinders)
+plot(cylinders, mpg)
+plot(cylinders, mpg, col = "red")
+plot(cylinders, mpg, col = "red", varwidth = T)
+plot(cylinders, mpg, col = "red", varwidth = T, horizontal = T)
+plot(cylinders, mpg, col = "red", varwidth = T, xlab = "cylinders", ylab = "MPG")
+hist(mpg)
+hist(mpg, col = 2)
+hist(mpg, col = 2, breaks = 15)
+plot(horsepower, mpg)
+pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
+      pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
+pairs(iris, log = 1:4, # log the first four
+      main = "Lengths and Widths in [log]", line.main=1.5, oma=c(2,2,3,2))
+names(iris)
+plot(iris$Sepal.Length,iris$Petal.Length)
+summary(iris)
 
+college <- College
+names(college)
+rownames(college)
+summary(college)
+pairs(college[,1:5])
+?Boston
 ```
+
+## Linear Regression
+
+Linear regression is a useful tool for predicting a quantitative response $Y$ on the basis of a single predictor variable $X$ . It assumes that there is approximately a linear relationship between $X$ and $Y$ .
+
+$Y ≈ β_0 + β_1X$ .
+
+Patient survival rate may be approximately modeled as response to biomarker A quantity. Then we regress patient survival rate onto biomarker A quantity by fitting the model
+
+$patient\_survival\_rate ≈ β_0 + β_1 * biomarker\_A\_quantity$ .
+
+$β_0$ and $β_1$ are the intercept and slope terms, unknown constants. They are the model coefficients or parameters. These will be derived by the training data, then we may predict patient survival rate of a biomarker A quantity by
+
+$\hat{y} = \hat{\beta_0} + \hat{\beta_1}x$ ,
+
+where $\hat{y}$ indicates a prediction of $Y$ on the basis of $X = x$.
+
+### Estimating Coefficients
+
+In practice, $\beta_0$ and $\beta_1$ are unknown. So we must use data to estimate the coefficients. Let
+
+$(x_1,y_1), (x_2,y_2),…, (x_n,y_n)$
+
+represent n observation pairs, each of which consists of a measurement of $X$ and a measurement of $Y$ . Our goal is to obtain coefficient estimates $\hat{\beta_0}$ and $\hat{\beta_1}$ such that the linear model fits the available data well---that is, so that $y_i ≈ \hat{\beta_0} + \hat{\beta_1}x_i$ for \$i = 1, . . . , n\$. In other words, we want to find an intercept $\hat{\beta_0}$ and a slope $\hat{\beta_1}$ such that the resulting line is as close as possible to the data points. There are a number of ways of measuring closeness. However, by far the most common approach involves minimizing the least squares criterion.
+
+Let $\hat{y_i} = \hat{\beta_0} + \hat{\beta_1}x_i$ be the prediction for $Y$ based on the $i$th value of $X$ . Then $e_i = y_i − \hat{y_i}$ represents the $i$ th residual---this is the difference between the $i$ th observed response value and the $i$ th response value that is predicted by our linear model. We define the residual sum of squares (RSS) as
+
+$RSS=e^2_1 +e^2_2 +···+e^2_n$ ,
+
+or equivalently as
+
+$RSS=(y_1−\hat{\beta_0}−\hat{\beta_1}x_1)^2+(y_2−\hat{\beta_0}−\hat{\beta_1}x_2)^2+···+(y_n−\hat{\beta_0}−\hat{\beta_1}x_n)^2$.
+
+The least squares approach chooses $\hat{\beta_0}$ and $\hat{\beta_1}$ to minimize the RSS. Using some calculus, one can show that the minimizers are
+
+$\hat{\beta_1}=\frac{\Sigma^n_{i=1}(x_i − \bar{x})(y_i − \bar{y})}{\Sigma^n_{i=1}(x_i - \bar{x})^2}$ ,
+
+$\hat{\beta_0} = \bar{y}-\hat{\beta_1}\bar{x}$ ,
+
+where $\bar{y} = \frac{1}{n}\Sigma^n_{i=1}y_i$ and $\bar{x} = \frac{1}{n}\Sigma^n_{i=1}x_i$ are the sample means. In other words, this defines the least squares coefficient estimates for simple linear regression.
+
+### Assessing the Accuracy of the Coefficient Estimates
+
+We assume that the \_true\_ relationship between $X$ and $Y$ takes the form $Y = f(X) + \epsilon$ for some unknown function \$f\$, where $\epsilon$ is a mean-zero random error term. If $f$ is to be approximated by a linear function, then we can write this relationship as
+
+$Y = \beta_0 + \beta_1 X + \epsilon$ .
+
+Here $\beta_0$ is the intercept term---that is, the expected value of $Y$ when $X = 0$ , and $\beta_1$ is the slope---the average increase in $Y$ associated with a one-unit increase in $X$ . The error term is a catch-all for what we miss with this simple model: the true relationship is probably not linear, there may be other variables that cause variation in $Y$ , and there may be measurement error. We typically assume that the error term is independent of $X$ .
+
+This model defines the *population regression line*, which is the best linear approximation to the true relationship between $X$ and $Y$ . The least squares regression coefficient estimates characterize the least squares line.
