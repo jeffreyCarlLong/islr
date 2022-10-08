@@ -386,3 +386,17 @@ Here $\beta_0$ is the intercept term---that is, the expected value of $Y$ when $
 This model defines the *population regression line*, which is the best linear approximation to the true relationship between $X$ and $Y$ . The least squares regression coefficient estimates characterize the least squares line.
 
 The true relationship is generally not known for real data, but the least squares line can always be computed using the coefficient estimates. In other words, in real applications, we have access to a set of observations from which we can compute the least squares line; however, the population regression line is unobserved.
+
+A reasonable estimate of the population mean $\hat{\mu} = \bar{y}$ , is the sample mean, where $\bar{y} = \frac{1}{n}\Sigma^n_{i=1}y_i$ . In the same way, the unknown coefficients $\beta_0$ and $\beta_1$ in linear regression define the population regression line. We seek to estimate these unknown coefficients using $\hat{\beta_0}$ and $\hat{\beta_1}$ . These coefficient estimates define the least squares line.
+
+To quantify how accurate the sample mean $\hat{\mu}$ 's estimation is of $\mu$ , we compute the standard error of $SE(\hat{\mu})$ .
+
+$Var(\hat{\mu}) = SE(\hat{\mu})^2 = \frac{\sigma^2}{n}$ ,
+
+where $\sigma$ is the standard deviation of each of the realizations $y_i$ of $Y$ . This holds provided that the $n$ observations are uncorrelated. The standard error tells us the average amount that this estimate $\hat{\mu}$ differs from the actual value of $\mu$ . Also note, this deviation shrinks with $n$ ---the more observations we have, the smaller the standard error of $\hat{\mu}$ . In a similar vein, we can wonder how close $\hat{\beta_0}$ and $\hat{\beta_1}$ are to the true values $\beta_0$ and $\beta_1$ . To compute the standard errors associated with $\hat{\beta_0}$ and $\hat{\beta_1}$ , we use the following formulas:
+
+$SE(\hat{\beta_0})^2 = \sigma^2\big[\frac{1}{n} + \frac{\bar{x}^2}{\Sigma^n_{i=1}(x_i-\bar{x})^2}\big]$ ,
+
+$SE(\hat{\beta_1})^2 = \sigma^2\big[\frac{1}{n} + \frac{\sigma^2}{\Sigma^n_{i=1}(x_i-\bar{x})^2}\big]$ ,
+
+where $\sigma^2 = Var(\epsilon)$ .
