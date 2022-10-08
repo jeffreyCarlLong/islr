@@ -384,3 +384,5 @@ $Y = \beta_0 + \beta_1 X + \epsilon$ .
 Here $\beta_0$ is the intercept term---that is, the expected value of $Y$ when $X = 0$ , and $\beta_1$ is the slope---the average increase in $Y$ associated with a one-unit increase in $X$ . The error term is a catch-all for what we miss with this simple model: the true relationship is probably not linear, there may be other variables that cause variation in $Y$ , and there may be measurement error. We typically assume that the error term is independent of $X$ .
 
 This model defines the *population regression line*, which is the best linear approximation to the true relationship between $X$ and $Y$ . The least squares regression coefficient estimates characterize the least squares line.
+
+The true relationship is generally not known for real data, but the least squares line can always be computed using the coefficient estimates. In other words, in real applications, we have access to a set of observations from which we can compute the least squares line; however, the population regression line is unobserved.
