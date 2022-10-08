@@ -399,4 +399,14 @@ $SE(\hat{\beta_0})^2 = \sigma^2\big[\frac{1}{n} + \frac{\bar{x}^2}{\Sigma^n_{i=1
 
 $SE(\hat{\beta_1})^2 = \sigma^2\big[\frac{1}{n} + \frac{\sigma^2}{\Sigma^n_{i=1}(x_i-\bar{x})^2}\big]$ ,
 
-where $\sigma^2 = Var(\epsilon)$ .
+where $\sigma^2 = Var(\epsilon)$ . For these formulas to be strictly valid, we need to assume that the errors $\epsilon_i$ for each observation have common variance $\sigma^2$ and are uncorrelated. Notice in the formula that $SE(\hat{\beta_1})$ is smaller when the $x_i$ are more spread out; intuitively we have more *leverage* to estimate a slope when this is the case. We also see that $SE(\hat{\beta_0})$ would be the same as $SE(\hat{\mu})$ if $\bar{x}$ were zero (in which case $\hat{\beta_0}$ would be equal to $\bar{y}$ . In general, $\sigma^2$ is not known, but can be estimated from the data. This estimate of $\sigma$ is known as the *residual standard error* , and is given by $RSE = \sqrt{RSS/(n-2)}$ .
+
+Standard errors can be used to compute *confidence intervals*. A 95% confidence interval is defined as a range of values such that with 95% probability, the range will contain the true unknown value of the parameter. The range is defined in terms of lower and upper limits computed from the sample of data. A 95% confidence interval has the following prop- erty: if we take repeated samples and construct the confidence interval for each sample, 95% of the intervals will contain the true unknown value of the parameter. For linear regression, the 95% confidence interval for $\beta_1$ approximately takes the form
+
+$\hat{\beta_1} \pm 2 \cdot SE(\hat{\beta_1})$
+
+That is there is approximately a 95% chance that the interval
+
+$\big[\hat{\beta_1} - 2 \cdot SE(\hat{\beta_1}), \hat{\beta_1} + 2 \cdot SE(\hat{\beta_1)}\big]$
+
+will contain the true value of $\beta_1$ .
