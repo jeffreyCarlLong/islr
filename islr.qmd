@@ -409,4 +409,6 @@ That is there is approximately a 95% chance that the interval
 
 $\big[\hat{\beta_1} - 2 \cdot SE(\hat{\beta_1}), \hat{\beta_1} + 2 \cdot SE(\hat{\beta_1)}\big]$
 
-will contain the true value of $\beta_1$ .
+will contain the true value of $\beta_1$ . Similarly, a confidence interval for $\beta_0$ approximately takes the form
+
+$\hat{\beta_0} \pm 2 \cdot SE(\hat{\beta_0})$ .
