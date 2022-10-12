@@ -409,41 +409,27 @@ That is there is approximately a 95% chance that the interval
 
 $\big[\hat{\beta_1} - 2 \cdot SE(\hat{\beta_1}), \hat{\beta_1} + 2 \cdot SE(\hat{\beta_1)}\big]$
 
-will contain the true value of $\beta_1$ . Similarly, a confidence interval for $\beta_0$ approximately takes the form
+will contain the true value of $\beta_1$ . Approximately for several reasons. The equation relies on the assumption that the errors are Gaussian. Also, the factor of 2 in front of the $SE(\hat{\beta_1})$ term will vary slightly depending on the number of observations $n$ in the linear regression. To be precise, rather than the number 2, the equation should contain the 97.5% quantile of a t-distribution with $n−2$ degrees of freedom. Similarly, a confidence interval for $\beta_0$ approximately takes the form
 
 $\hat{\beta_0} \pm 2 \cdot SE(\hat{\beta_0})$ .
 
-Similarly, a confidence interval for β0 approximately takes the form
+Standard errors can also be used to perform *hypothesis tests* on the coefficients. The most common hypothesis test involves testing the *null hypothesis* of
 
-Approximately for several reasons. Equation 3.10 relies on the assumption that the errors are Gaussian. Also, the factor of 2 in front of the SE(βˆ1) term will vary slightly depending on the number of observations n in the linear regression. To be precise, rather than the number 2, (3.10) should contain the 97.5% quantile of a t-distribution with n−2 degrees of freedom. Details of how to compute the 95 % confidence interval precisely in R will be provided later in this chapter.
-
-residual standard error
-
-confidence interval
-
-In the case of the advertising data, the 95 % confidence interval for β0 is \[6.130, 7.935\] and the 95 % confidence interval for β1 is \[0.042, 0.053\]. Therefore, we can conclude that in the absence of any advertising, sales will, on average, fall somewhere between 6,130 and 7,935 units. Furthermore, for each \$1,000 increase in television advertising, there will be an average increase in sales of between 42 and 53 units.
-
-Standard errors can also be used to perform hypothesis tests on the coefficients. The most common hypothesis test involves testing the null hypothesis of
-
-H0 : There is no relationship between X and Y
+$H_0$ : There is no relationship between $X$ and $Y$
 
 versus the alternative hypothesis
 
-Ha : There is some relationship between X and Y . Mathematically, this corresponds to testing
+$H_a$ : There is some relationship between $X$ and $Y$ . Mathematically, this corresponds to testing
 
-H0 versus Ha
+$H_0 : \beta_1 = 0$
 
-versus
+versus $H_a : \beta_1 \neq 0$ ,
 
-H0 :β1 =0 Ha :β1 ̸=0,
+since if $\beta_1 =0$ then the model reduces to $Y = \beta_0+\epsilon$ ,and $X$ is not associated with $Y$ . To test the null hypothesis, we need to determine whether $\hat{\beta_1}$ , our estimate for $\beta_1$ , is sufficiently far from zero that we can be confident that $\beta_1$ is non-zero. How far is far enough? This of course depends on the accuracy of $\hat{\beta_1}$ ---that is, it depends on $SE(\hat{\beta}_1)$ . If $SE(\hat{\beta}_1)$ is small, then even relatively small values of $\hat{\beta}_1$ may provide strong evidence that $\beta_1 \neq 0$ , and hence that there is a relationship between $X$ and $Y$ . In contrast, if $SE(\hat{\beta}_1)$ is large, then $\hat{\beta}_1$ must be large in absolute value in order for us to reject the null hypothesis. In practice, we compute a t-statistic, given by
 
-sinceifβ1 =0thenthemodel(3.5)reducestoY =β0+ε,andXis not associated with Y . To test the null hypothesis, we need to determine whether βˆ1, our estimate for β1, is sufficiently far from zero that we can be confident that β1 is non-zero. How far is far enough? This of course depends on the accuracy of βˆ1---that is, it depends on SE(βˆ1). If SE(βˆ1) is small, then even relatively small values of βˆ1 may provide strong evidence that β1 ̸= 0, and hence that there is a relationship between X and Y . In contrast, if SE(βˆ1) is large, then βˆ1 must be large in absolute value in order for us to reject the null hypothesis. In practice, we compute a t-statistic, given by
+$t = \frac{\hat{\beta}_1 − 0} {SE(\hat{\beta}_1 )}$ ,
 
-t = βˆ1 − 0 SE(βˆ1 ) ,
-
-which measures the number of standard deviations that βˆ1 is away from 0. If there really is no relationship between X and Y , then we expect that (3.14) will have a t-distribution with n − 2 degrees of freedom. The t-distribution has a bell shape and for values of n greater than approximately 30 it is quite similar to the standard normal distribution. Consequently, it is a simple matter to compute the probability of observing any number equal to \|t\| or larger in absolute value, assuming β1 = 0. We call this probability the p-value. Roughly speaking, we interpret the p-value as follows: a small p-value indicates that it is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real association between the predictor and the response. Hence, if we see a small p-value, then we can infer that there is an association between the predictor and the response. We reject the null hypothesis---that is, we declare a relationship to exist between X and Y ---if the p-value is small enough. Typical p-value cutoffs for rejecting the null hypothesis are 5% or 1%, although this topic will be explored in much greater detail in Chap- ter 13. When n = 30, these correspond to t-statistics (3.14) of around 2 and 2.75, respectively.
-
-Table 3.1 provides details of the least squares model for the regression of number of units sold on TV advertising budget for the Advertising data. Notice that the coefficients for βˆ0 and βˆ1 are very large relative to their standard errors, so the t-statistics are also large; the probabilities of seeing such values if H0 is true are virtually zero. Hence we can conclude that β0 ̸=0andβ1 ̸=0.4
+which measures the number of standard deviations that $\hat{\beta}_1$ is away from 0. If there really is no relationship between $X$ and $Y$ , then we expect a t-distribution with $n − 2$ degrees of freedom. The t-distribution has a bell shape and for values of $n$ greater than approximately 30 it is quite similar to the standard normal distribution. Consequently, it is a simple matter to compute the probability of observing any number equal to $|t|$ or larger in absolute value, assuming $\beta_1 = 0$ . We call this probability the *p-value*. Roughly speaking, we interpret the *p-value* as follows: a small *p-value* indicates that it is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real association between the predictor and the response. Hence, if we see a small *p-value*, then we can infer that there is an association between the predictor and the response. We *reject the null hypothesis*---that is, we declare a relationship to exist between $X$ and $Y$ ---if the *p-value* is small enough. Typical *p-value* cutoffs for rejecting the null hypothesis are 5% or 1%. When n = 30, these correspond to t-statistics of around 2 and 2.75, respectively.
 
 \## Assessing the Accuracy of the Model
 
