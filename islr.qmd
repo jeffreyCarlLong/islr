@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Statistcal Learing"
+title: "Introduction to Statistcal Learning"
 subtitle: "with Applications in R (ISLR) abstracted to Biomarker Discovery and Prediction"
 author: "Jeffrey Long"
 format: html
